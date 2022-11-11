@@ -10,7 +10,7 @@
     <version>2.0.0</version>
 
     <modules>
-        <module>dockercompose-springboot-mysql-nginx/app</module>
+       <!--<module>dockercompose-springboot-mysql-nginx/app</module>
         <module>spring-boot-actuator</module>
         <module>spring-boot-admin-simple</module>
         <module>spring-boot-banner</module>
@@ -43,7 +43,8 @@
         <module>spring-boot-thymeleaf/spring-boot-thymeleaf-layout</module>
         <module>spring-boot-web</module>
         <module>spring-boot-web-thymeleaf</module>
-        <module>spring-boot-webflux</module>
+        <module>spring-boot-webflux</module>-->
+        <module>01_lambda</module>
     </modules>
 
     <build>
