@@ -13,7 +13,9 @@ public class FanoutSender {
 	public void send() {
 		String context = "hi, fanout msg ";
 		System.out.println("Sender : " + context);
-		this.rabbitTemplate.convertAndSend("fanoutExchange","", context);
+		// Send message to queue "fanout.exchange" with routing key "red"
+		// 配置路由规则red 也即是只有消费端也配置了同样的路由才能消费
+		this.rabbitTemplate.convertAndSend("fanoutExchange","red", context);
 	}
 
 }

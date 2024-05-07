@@ -18,7 +18,6 @@
         <module>spring-boot-docker</module>
         <module>spring-boot-elasticsearch</module>
         <module>spring-boot-file-upload</module>
-        <module>spring-boot-hello</module>
         <module>spring-boot-helloWorld</module>
         <module>spring-boot-jpa/spring-boot-jpa</module>
         <module>spring-boot-jpa/spring-boot-multi-Jpa</module>
@@ -34,7 +33,6 @@
         <module>spring-boot-mybatis-plus</module>
         <module>spring-boot-package</module>
         <module>spring-boot-package-war</module>
-        <module>spring-boot-rabbitmq</module>
         <module>spring-boot-redis</module>
         <module>spring-boot-scheduler</module>
         <module>spring-boot-shiro</module>
@@ -44,8 +42,11 @@
         <module>spring-boot-web</module>
         <module>spring-boot-web-thymeleaf</module>
         <module>spring-boot-webflux</module>-->
+        <module>spring-boot-rabbitmq</module>
+        <module>spring-boot-hello</module>
         <module>01_lambda</module>
     </modules>
+
 
     <build>
         <plugins>
