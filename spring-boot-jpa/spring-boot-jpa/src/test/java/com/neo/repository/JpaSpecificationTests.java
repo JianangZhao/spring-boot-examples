@@ -3,7 +3,7 @@ package com.neo.repository;
 import com.neo.model.UserDetail;
 import com.neo.param.UserDetailParam;
 import com.neo.service.UserDetailService;
-import com.neo.service.UserDetailServiceImpl;
+import com.neo.util.TraceIdUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +24,7 @@ public class JpaSpecificationTests {
 
 	@Test
 	public void testFindByCondition()  {
+		String traceId = TraceIdUtil.generateTraceId();
 		int page=0,size=10;
 		Sort sort = new Sort(Sort.Direction.DESC, "id");
 		Pageable pageable = PageRequest.of(page, size, sort);

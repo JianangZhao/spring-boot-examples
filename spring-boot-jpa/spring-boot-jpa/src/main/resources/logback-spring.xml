@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+    <!-- 设置日志存储路径 -->
+    <property name="path" value="/Users/zhaojianang/ideaPorject/log"/>
+    <property name="serviceName" value="hello"/>
+
+    <!--0. 日志格式和颜色渲染 -->
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <!-- 彩色日志格式 -->
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- 控制台输出appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--设置输出格式-->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出 %d表示日期 %thread表示线程名 %-5level级别从左显示五个字符宽度 %msg日志消息 %n换行符-->
+            <pattern>%d{yyyy-MM-dd HH:MM:ss.SSS} [%thread] [%X{TraceId}] %-5level %logger{50} - %msg%n</pattern>
+<!--            <pattern>%white(%contextName) %red(%d{yyyy-MM-dd HH:mm:ss}) %yellow(%X{trackId}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %white(%msg%n)</pattern>-->
+            <!--引用彩色日志输出-->
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="timeFileOutput" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志名指定最新的日志名 其他文件名使用FileNamePattern-->
+        <File>${path}/${serviceName}.log</File>
+        <!--文件滚动模式-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名 可以设置文件类型为gz 开启文件压缩-->
+            <FileNamePattern>${path}/${serviceName}.%d{yyyy-MM-dd}.%i.log.gz</FileNamePattern>
+            <!--设置文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+            <!--按大小分割同一天的-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出 %d表示日期 %thread表示线程名 %-5level级别从左显示五个字符宽度 %msg日志消息 %n换行符-->
+            <pattern>%d{yyyy-MM-dd HH:MM:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <!--设置编码-->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+    <springProfile name="local,dev">
+        <logger name="com.example.demo.controller" level="DEBUG" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
+    </springProfile>
+    <!-- 生产环境. -->
+    <springProfile name="prod">
+        <logger name="com.example.demo" level="INFO" additivity="false">
+            <appender-ref ref="timeFileOutput"/>
+        </logger>
+    </springProfile>
+
+    <!-- root 节点是必选节点，用来指定最基础的日志输出级别，只有一个 level 属性，用于设置打印级别,可选如下:TRACE,DEBUG,INFO,WARN,ERROR,ALL,OFF -->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="timeFileOutput"/>
+    </root>
+</configuration>
